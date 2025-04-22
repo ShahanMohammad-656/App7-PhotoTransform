@@ -163,6 +163,29 @@ blueCtx.putImageData(imageData, 0, 0);
         context.font = '20pt Calibri';
         context.fillStyle = "black";
         context.fillText("Original image will go here", 10, 20);
+       <canvas id="myCanvas" width="500" height="500"></canvas>
+<img id="sourceImage" src="your-image.jpg" style="display:none;" />
+
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  const img = document.getElementById("sourceImage");
+
+  img.onload = function () {
+    ctx.drawImage(img, 0, 0); // Draw the image onto the canvas
+  };
+
+  canvas.addEventListener("click", function (event) {
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor(event.clientX - rect.left);
+    const y = Math.floor(event.clientY - rect.top);
+
+    const pixel = ctx.getImageData(x, y, 1, 1).data;
+    const [r, g, b, a] = pixel;
+
+    console.log(`Clicked at (${x}, ${y})`);
+    console.log(`RGB: (${r}, ${g}, ${b}), Alpha: ${a}`);
+  });
       </script>
       <canvas id="blueCanvas" width=600 height=500 style="border:1px solid #0000FF;"></canvas>
 <script> /* this code will allow us to create the blue canvas */
